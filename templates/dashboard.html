@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background: url('media/welcome.avif') no-repeat center center/cover;
+            background-size: cover;
+            display: flex;
+            justify-content: flex-end; /* Changed to push container to right */
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding-right: 5%; /* Added padding on right side */
+        }
+        
+        /* Main Container */
+        .container {
+            
+            width: 900px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        /* Title */
+        h1 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        /* Dashboard Content */
+        .dashboard-content {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            gap: 0.5rem; /* Added 0.5rem gap between sections */
+        }
+        
+        /* Left & Right Sections */
+        .left-section, .right-section {
+            width: 48%;
+            padding: 20px;
+            border-radius: 10px;
+            height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        /* Left Section (Trading Strategy) */
+        .left-section {
+            background: linear-gradient(135deg, #2196F3, #6dd5fa);
+            color: white;
+        }
+        
+        /* Right Section (Trading Amount) */
+        .right-section {
+            background: linear-gradient(135deg, #4CAF50, #81c784);
+            color: white;
+        }
+        
+        /* Section Titles */
+        .section-title {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        /* Description */
+        .description {
+            margin-bottom: 15px;
+        }
+        
+        /* Toggle Switch */
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            margin-top: auto;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 30px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #ff5722;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+        
+        /* Input Field */
+        .input-container {
+            display: flex;
+            justify-content: center;
+            margin-top: auto;
+        }
+        
+        .right-section input {
+            width: 120px;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        /* Save Button */
+        .button-container {
+            margin-top: 10px;
+        }
+        
+        button {
+            background-color: #ff9800;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+            width: 20%;
+        }
+        
+        button:hover {
+            background-color: #e68900;
+            transform: scale(1.05);
+        }
+        
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            body {
+                justify-content: center; /* Center on mobile */
+                padding-right: 0; /* Remove padding on mobile */
+            }
+            
+            .container {
+                width: 90%;
+                max-width: 500px;
+            }
+            
+            .dashboard-content {
+                flex-direction: column;
+                gap: 1rem; /* Increased gap for mobile view */
+            }
+            
+            .left-section, .right-section {
+                width: auto;
+                margin-bottom: 0; /* Removed margin as gap handles spacing */
+            }
+            
+            button {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Trading Dashboard</h1>
+        
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            
+            <!-- Left Side: Trading Strategy -->
+            <div class="left-section">
+                <h2 class="section-title">Trading Strategy</h2>
+                <p class="description">Toggle to enable/disable automated trading strategy</p>
+                <div class="toggle-container">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="strategyToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Right Side: Trading Amount -->
+            <div class="right-section">
+                <h2 class="section-title">Trading Amount</h2>
+                <p class="description">Set the amount to be used for trading</p>
+                <div class="input-container">
+                    <input type="number" id="tradeAmount" placeholder="Enter amount" value="1000">
+                </div>
+            </div>
+        </div>
+
+        <!-- Save Button -->
+        <div class="button-container">
+            <button id="saveButton">Save Settings</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('saveButton').addEventListener('click', function() {
+            const isStrategyEnabled = document.getElementById('strategyToggle').checked;
+            const tradeAmount = document.getElementById('tradeAmount').value;
+
+            alert(`Settings saved! Strategy: ${isStrategyEnabled ? 'ON' : 'OFF'}, Amount: $${tradeAmount}`);
+            
+            // Add animation effect when saving
+            anime({
+                targets: '#saveButton',
+                scale: [1, 1.2, 1],
+                duration: 500,
+                easing: 'easeInOutQuad'
+            });
+        });
+    </script>
+</body>
+</html>
