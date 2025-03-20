@@ -19,13 +19,17 @@ def home():
 def login():
     return render_template('login.html')
 
+@app.route('/register.html')
+def login():
+    return render_template('register.html')
+
 @app.route('/features.html')
 def features():
     return render_template('features.html')
     
     
     
-@app.route('/dashboard')
+@app.route('/dashboard.html')
 def dashboard():
     return render_template('dashboard.html')
 
