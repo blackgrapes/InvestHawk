@@ -1,6 +1,13 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 
 app = Flask(__name__)
+
+
+@app.route('/media/<path:filename>')
+def media(filename):
+    return send_from_directory('media', filename)
+    
+
 
 @app.route('/')
 def home():
