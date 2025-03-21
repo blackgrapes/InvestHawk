@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, redirect, url_for
 
 app = Flask(__name__)
 
@@ -13,6 +13,9 @@ def media(filename):
 def home():
     return render_template('home.html')
 
+@app.route('/home.html')
+def home2():
+            return redirect(url_for("home"))
 
 
 @app.route('/login.html')
