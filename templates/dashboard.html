@@ -14,8 +14,13 @@
             font-family: 'Arial', sans-serif;
         }
 
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
         body {
-            height: 100vh;
             background: url('media/welcome.avif') no-repeat center center fixed;
             background-size: cover;
             display: flex;
@@ -25,28 +30,28 @@
         }
 
         .overlay {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
-            z-index: -1;
+            z-index: 0;
         }
 
         /* Main Container */
         .container {
             position: relative;
             width: 850px;
+            max-width: 90%;
             background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px); /* Initial blur */
+            backdrop-filter: blur(10px);
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
             text-align: center;
             transition: transform 0.3s ease-in-out;
-            margin-left: 22rem;
-            margin-top: -50px;
+            z-index: 1;
         }
         
         /* Remove additional blur on hover */
@@ -54,8 +59,6 @@
             transform: scale(1.02);
             backdrop-filter: none; /* Prevents additional blurring */
         }
-        
-
         
         /* Title */
         h1 {
@@ -194,10 +197,6 @@
 
         /* Responsive Design */
         @media screen and (max-width: 768px) {
-            body {
-                justify-content: center;
-            }
-            
             .container {
                 width: 90%;
                 max-width: 500px;
@@ -239,8 +238,6 @@
                 </div>
             </div>
             
-           
-
             <!-- Right Side: Trading Amount -->
             <div class="right-section">
                 <h2 class="section-title">Trading Amount</h2>
