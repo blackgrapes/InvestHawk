@@ -56,7 +56,7 @@
       backdrop-filter: blur(10px);
       border-radius: 10px;
       padding: 30px;
-      width: 350px;
+      width: 380px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
     
@@ -84,6 +84,13 @@
     
     .input-group input::placeholder {
       color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .input-label {
+      display: block;
+      margin-bottom: 5px;
+      color: white;
+      font-size: 14px;
     }
     
     .login-btn {
@@ -129,7 +136,26 @@
       z-index: 10;
     }
     
-  
+    .token-input {
+      font-size: 14px;
+    }
+    
+    .optional-label {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 12px;
+      margin-left: 5px;
+    }
+    
+    /* Fix autofill color issue */
+    .input-group input:-webkit-autofill,
+    .input-group input:-webkit-autofill:hover, 
+    .input-group input:-webkit-autofill:focus, 
+    .input-group input:-webkit-autofill:active {
+      background-color: transparent !important;
+      -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.2) inset !important;
+      -webkit-text-fill-color: white !important;
+      transition: background-color 5000s ease-in-out 0s;
+    }
   </style>
 </head>
 <body>
@@ -138,55 +164,48 @@
   <a href="home.html" class="logo">InvestHawk</a>
   <a href="home.html" class="home-link">Back to Home</a>
 
+
+
   <div class="container">
     <div class="login-container">
       <h2>Login</h2>
-      <div class="input-group">
-        <input type="text" placeholder="Username">
-      </div>
-      <div class="input-group">
-        <input type="password" placeholder="Password">
-      </div>
-      <button class="login-btn" onclick="redirectToDashboard()">Login</button>
+      <form onsubmit="return validateLoginForm()">
+        <div class="input-group">
+          <input type="text" placeholder="Username" id="username" required>
+        </div>
+        <div class="input-group">
+          <input type="password" placeholder="Password" id="password" required>
+        </div>
+        <div class="input-group">
+          <input type="text" placeholder="Enter your access token (max 287 characters)" id="accessToken" class="token-input" maxlength="287" required>
+        </div>
+        <button type="button" class="login-btn" onclick="redirectToDashboard()">Login</button>
+
+      </form>
       <div class="login-footer">
         Don't have an account? <a id="signup-link" href="register.html">Sign up</a>
       </div>
     </div>
   </div>
   
- 
+  
   <script>
-    // Get DOM elements
-    const signupLink = document.getElementById('signup-link');
-    const loginLink = document.getElementById('login-link');
-    const signupModal = document.getElementById('signup-modal');
-    const closeBtn = document.querySelector('.close-btn');
-    
-    // Open signup modal
-    signupLink.addEventListener('click', function() {
-      signupModal.classList.add('active');
-    });
-    
-    // Close signup modal
-    closeBtn.addEventListener('click', function() {
-      signupModal.classList.remove('active');
-    });
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-      if (event.target === signupModal) {
-        signupModal.classList.remove('active');
-      }
-    });
-    
-    // Switch back to login
-    loginLink.addEventListener('click', function() {
-      signupModal.classList.remove('active');
-    });
-    
     function redirectToDashboard() {
-      window.location.href = "dashboard.html"; // Redirect to dashboard.html
+      // Get input values
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const accessToken = document.getElementById('accessToken').value.trim();
+  
+      // Validate input fields
+      if (username === "" || password === "" || accessToken === "") {
+        alert("Please fill in all fields before logging in.");
+        return;
+      }
+  
+      // Redirect to dashboard if validation passes
+      window.location.href = "dashboard.html";
     }
   </script>
+  
 </body>
 </html>
