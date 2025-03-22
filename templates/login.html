@@ -164,38 +164,48 @@
   <a href="home.html" class="logo">InvestHawk</a>
   <a href="home.html" class="home-link">Back to Home</a>
 
+
+
   <div class="container">
     <div class="login-container">
       <h2>Login</h2>
-      <div class="input-group">
-        <input type="text" placeholder="Username" id="username">
-      </div>
-      <div class="input-group">
-        <input type="password" placeholder="Password" id="password">
-      </div>
-      <div class="input-group">
+      <form onsubmit="return validateLoginForm()">
+        <div class="input-group">
+          <input type="text" placeholder="Username" id="username" required>
+        </div>
+        <div class="input-group">
+          <input type="password" placeholder="Password" id="password" required>
+        </div>
+        <div class="input-group">
+          <input type="text" placeholder="Enter your access token (max 287 characters)" id="accessToken" class="token-input" maxlength="287" required>
+        </div>
+        <button type="button" class="login-btn" onclick="redirectToDashboard()">Login</button>
 
-        <input type="text" placeholder="Enter your access token (max 287 characters)" id="accessToken" class="token-input" maxlength="287">
-      </div>
-      <button class="login-btn" onclick="redirectToDashboard()">Login</button>
+      </form>
       <div class="login-footer">
         Don't have an account? <a id="signup-link" href="register.html">Sign up</a>
       </div>
     </div>
   </div>
   
+  
   <script>
     function redirectToDashboard() {
       // Get input values
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      const accessToken = document.getElementById('accessToken').value;
-      
-      // You could validate the inputs here if needed
-      
-      // For now, just redirect to dashboard
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const accessToken = document.getElementById('accessToken').value.trim();
+  
+      // Validate input fields
+      if (username === "" || password === "" || accessToken === "") {
+        alert("Please fill in all fields before logging in.");
+        return;
+      }
+  
+      // Redirect to dashboard if validation passes
       window.location.href = "dashboard.html";
     }
   </script>
+  
 </body>
 </html>
