@@ -197,40 +197,53 @@
   </div>
 
   <!-- Signup Modal -->
-  <div class="modal" id="signup-modal">
-    <div class="close-btn" onclick="closeModal()">&times;</div>
-    <div class="modal-content">
-      <h2>Create Account</h2>
+<div class="modal" id="signup-modal">
+  <div class="close-btn" onclick="closeModal()">&times;</div>
+  <div class="modal-content">
+    <h2>Create Account</h2>
 
+    <form action="/signup" method="POST" onsubmit="return validateForm()">
       <div class="input-group">
-        <input type="text" id="modal-fullname" placeholder="Full Name">
-      </div>
-
-      <div class="input-group">
-        <input type="email" id="modal-email" placeholder="Email">
+        <input type="text" id="modal-fullname" name="fullname" placeholder="Full Name" required>
       </div>
 
       <div class="input-group">
-        <input type="text" id="modal-username" placeholder="Username">
+        <input type="email" id="modal-email" name="email" placeholder="Email" required>
       </div>
 
       <div class="input-group">
-        <input type="password" id="modal-password" placeholder="Password">
+        <input type="text" id="modal-username" name="username" placeholder="Username" required>
       </div>
 
       <div class="input-group">
-        <input type="password" id="modal-confirmPassword" placeholder="Confirm Password">
+        <input type="password" id="modal-password" name="password" placeholder="Password" required>
       </div>
 
-      <button class="register-btn" onclick="register()">Sign Up</button>
-
-      <div class="register-footer">
-        Already have an account? <a href="login.html">Login</a>
+      <div class="input-group">
+        <input type="password" id="modal-confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
       </div>
+
+      <button type="submit" class="register-btn">Sign Up</button>
+    </form>
+
+    <div class="register-footer">
+      Already have an account? <a href="login.html">Login</a>
     </div>
   </div>
+</div>
 
   <script>
+    function validateForm() {
+      let password = document.getElementById("modal-password").value;
+      let confirmPassword = document.getElementById("modal-confirmPassword").value;
+  
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return false;
+      }
+      return true;
+    }
+
     function register() {
       const fullname = document.getElementById("fullname").value;
       const email = document.getElementById("email").value;
