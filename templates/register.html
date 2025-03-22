@@ -111,43 +111,6 @@
       text-decoration: none;
     }
 
-    /* Modal Styles */
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .modal.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .modal-content {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      border-radius: 10px;
-      padding: 30px;
-      width: 400px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      text-align: center;
-      transform: translateY(-20px);
-      transition: all 0.3s ease;
-    }
-
-    .modal.active .modal-content {
-      transform: translateY(0);
-    }
 
     .close-btn {
       position: absolute;
@@ -160,103 +123,46 @@
   </style>
 </head>
 <body>
-
-  <div class="overlay"></div>
-  <a href="home.html" class="logo">InvestHawk</a>
-
-  <div class="container">
-    <div class="register-container">
-      <h2>Create Account</h2>
-
-      <div class="input-group">
-        <input type="text" id="fullname" placeholder="Full Name">
-      </div>
-
-      <div class="input-group">
-        <input type="email" id="email" placeholder="Email">
-      </div>
-
-      <div class="input-group">
-        <input type="text" id="username" placeholder="Username">
-      </div>
-
-      <div class="input-group">
-        <input type="password" id="password" placeholder="Password">
-      </div>
-
-      <div class="input-group">
-        <input type="password" id="confirmPassword" placeholder="Confirm Password">
-      </div>
-
-      <button class="register-btn" onclick="register()">Sign Up</button>
-
-      <div class="register-footer">
-        Already have an account? <a href="login.html">Login</a>
-      </div>
-    </div>
-  </div>
-
   <!-- Signup Modal -->
-  <div class="modal" id="signup-modal">
-    <div class="close-btn" onclick="closeModal()">&times;</div>
-    <div class="modal-content">
-      <h2>Create Account</h2>
+  <form action="{{ url_for('register') }}" method="POST">
+    <div class="modal" id="signup-modal">
+        <div class="modal-content">
+        <div class="close-btn" onclick="closeModal()">&times;</div>
+            <h2>Create Account</h2>
 
-      <div class="input-group">
-        <input type="text" id="modal-fullname" placeholder="Full Name">
-      </div>
+            <div class="input-group">
+                <input type="text" name="fullname" placeholder="Full Name" required>
+            </div>
 
-      <div class="input-group">
-        <input type="email" id="modal-email" placeholder="Email">
-      </div>
+            <div class="input-group">
+                <input type="email" name="email" placeholder="Email" required>
+            </div>
 
-      <div class="input-group">
-        <input type="text" id="modal-username" placeholder="Username">
-      </div>
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Username" required>
+            </div>
 
-      <div class="input-group">
-        <input type="password" id="modal-password" placeholder="Password">
-      </div>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
 
-      <div class="input-group">
-        <input type="password" id="modal-confirmPassword" placeholder="Confirm Password">
-      </div>
+            <div class="input-group">
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            </div>
 
-      <button class="register-btn" onclick="register()">Sign Up</button>
+            <button type="submit" class="register-btn">Sign Up</button>
 
-      <div class="register-footer">
-        Already have an account? <a href="login.html">Login</a>
-      </div>
+            <div class="register-footer">
+                Already have an account? <a href="login.html">Login</a>
+            </div>
+        </div>
+    </div>
+</form>
+
     </div>
   </div>
 
-  <script>
-    function register() {
-      const fullname = document.getElementById("fullname").value;
-      const email = document.getElementById("email").value;
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
 
-      if (fullname && email && username && password && password === confirmPassword) {
-        alert("Registration Successful!");
-        window.location.href = "login.html";
-      } else {
-        alert("Please fill all fields correctly.");
-      }
-    }
-
-    function closeModal() {
-      document.getElementById("signup-modal").classList.remove("active");
-    }
-
-    window.addEventListener('click', function(event) {
-      const modal = document.getElementById("signup-modal");
-      if (event.target === modal) {
-        modal.classList.remove("active");
-      }
-    });
-  </script>
 
 </body>
 </html>
