@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Required for session management
 
 # ✅ MySQL Database Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:772002@localhost/investhawk'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Jhalak1234321@localhost:3306/investhawk'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # ✅ Initialize Database
@@ -25,16 +25,16 @@ login_manager.login_view = "login"  # Redirects to login page if unauthorized
 # ✅ User Model
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    fullname = db.Column(db.String(200), nullable=False)
-    email = db.Column(db.String(200), unique=True, nullable=False)
-    username = db.Column(db.String(150), unique=True, nullable=False)
-    password = db.Column(db.String(500), nullable=False)
+    fullname = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
     
     def __init__(self, fullname, email, username, password):
         self.fullname = fullname
         self.email = email
         self.username = username
-        self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        self.password = password
     
     def check_password(self, password):
         return bcrypt.checkpw(password.encode('utf-8'), self.password.encode('utf-8'))
@@ -116,8 +116,13 @@ def register():
 
         # Create new user
         new_user = User(fullname=fullname, email=email, username=username, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            print("Error saving to database:", e)
+
 
         flash("Registration successful! Please login.", "success")
         return redirect(url_for("login"))
