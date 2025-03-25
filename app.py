@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Required for session management
 
 # ✅ MySQL Database Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Amisha@123!@localhost:3306/investhawk'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Jhalak1234321@localhost:3306/investhawk'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # ✅ Initialize Database
